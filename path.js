@@ -1,5 +1,5 @@
-const icon = document.getElementById('icon'); // Assuming you have an HTML element with id 'icon'
-const jsonUrl = './NTNU-Art_1F.json'; // Replace with your actual JSON file URL
+const icon = document.getElementById('icon'); 
+const jsonUrl = './NTNU-Art_1F.json'; 
 
 function calculatePosition(x, y) {
   const minX = 10.45;
@@ -19,19 +19,22 @@ function updateIconPosition(x, y) {
   icon.style.top = `${iconY}%`;
 }
 
-function fetchAndSetIconPosition() {
-  fetch(jsonUrl)
-    .then(response => response.json())
-    .then(data => {
-      // Assuming the data is an array of objects
-      const lastDataPoint = data[data.length - 1];
-      updateIconPosition(lastDataPoint.X, lastDataPoint.Y);
-    })
-    .catch(error => console.error('Error fetching JSON:', error));
-}
+function loadjson() {
+    fetch(jsonUrl)
+      .then(response => response.json())
+      .then(data => {
+        // Assuming the data is an array of objects
+        data.forEach(item => {
+          if (item.Floor === "1F") {  // Only consider 1F data
+            updateIconPosition(item.X, item.Y);
+          }
+        });
+      })
+      .catch(error => console.error('Error fetching JSON:', error));
+  }
 
 // Initial call to fetch and set icon position
-fetchAndSetIconPosition();
+loadjson();
 
 // Update icon position every second
-setInterval(fetchAndSetIconPosition, 1000);
+setInterval(loadjson, 1000);
