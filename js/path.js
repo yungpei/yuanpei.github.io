@@ -1,5 +1,5 @@
 const icon = document.getElementById('icon');
-const jsonUrl = '../json/route.json'; 
+const jsonUrl = '../json/userLocationData.json'; 
 
 function calculatePosition(x, y) {
   const minX = 10.45;
