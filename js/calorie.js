@@ -29,3 +29,35 @@ function calculateCalories(distance) {
   const calories = distance * 0.05 * weight; // 假設每公尺消耗0.05卡路里
   return calories;
 }
+function updateInfo() {
+    document.getElementById('distance-info').innerText = `Total Distance: ${totalDistance.toFixed(2)} meters`;
+    document.getElementById('time-info').innerText = `Total Time: ${totalTime.toFixed(2)} seconds`;
+    document.getElementById('calories-info').innerText = `Total Calories: ${calculateCalories(totalDistance).toFixed(2)} calories`;
+  }
+  
+  // 在 loadjson 函式中的位置更新後呼叫
+  function loadjson() {
+    fetch(jsonUrl)
+      .then(response => response.json())
+      .then(data => {
+        jsonData = data;
+        if (currentIndex < jsonData.length) {
+          const point = jsonData[currentIndex];
+          updateIconPosition(point.X, point.Y);
+          updateCaloriesAndTime(point.X, point.Y);
+          updateInfo(); // 更新資訊
+          currentIndex++; 
+        } else {
+          currentIndex = 0;
+        }
+      })
+      .catch(error => console.error('Error fetching JSON:', error));
+  }
+  
+  // 初始加載icon位置
+  loadjson();
+  
+  // 每秒更新一次位置和相關資訊
+  setInterval(loadjson, 1000);
+  
+  
