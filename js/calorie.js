@@ -11,7 +11,7 @@ function updateCaloriesAndTime(x, y) {
   if (currentIndex > 0) {
     const prevPoint = jsonData[currentIndex - 1];
     const distance = calculateDistance(prevPoint.X, prevPoint.Y, x, y);
-    const speed = 1; // 假設平均步行速度為每秒1公尺
+    const speed = 2; // 假設平均步行速度為每秒1公尺
     const time = distance / speed;
     
     totalDistance += distance;
